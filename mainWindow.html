@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/wing1.0.0.min.css">
+    <title>ShopingList</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="text-center">ShopingList</h1>
+        <hr>
+        <!--a href="prueba.html">Pruebas</a-->
+        <ul>
+
+        </ul>
+    </div>
+
+    <script>
+        const electron = require('electron');
+        const { ipcRenderer } = electron;
+        const ul = document.querySelector('ul');
+
+        //Catch and add item
+        ipcRenderer.on('item:add', function (e, item) {
+            const li = document.createElement('li');
+            const itemText = document.createTextNode(item);
+            li.appendChild(itemText);
+            ul.appendChild(li);
+        });
+
+        //Clear all items
+        ipcRenderer.on('item:clear', function () {
+            ul.innerHTML = "";
+        });
+
+        //Remove item
+        ul.addEventListener("dblclick", removeItem);
+        function removeItem(e) {
+            e.target.remove();
+        }
+    </script>
+</body>
+
+</html>
